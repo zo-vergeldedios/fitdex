@@ -60,7 +60,7 @@ function App() {
           className="saveAndDeleteButton"
           onClick={() => {
             setWorkouts(workouts.filter((wo) => wo.id !== workout.id));
-            fetch("http://localhost:3000/delete", {
+            fetch(`${import.meta.env.VITE_API_URL}/delete`, {
               method: "POST",
               mode: "cors",
               headers: {
@@ -99,7 +99,7 @@ function App() {
                 return wo;
               }),
             );
-            fetch("http://localhost:3000/update", {
+            fetch(`${import.meta.env.VITE_API_URL}/update`, {
               method: "POST",
               mode: "cors",
               headers: {
@@ -152,7 +152,7 @@ function App() {
 
             console.log(wo, "edit program");
 
-            fetch("http://localhost:3000/update", {
+            fetch(`${import.meta.env.VITE_API_URL}/update`, {
               method: "POST",
               mode: "cors",
               headers: {
@@ -187,7 +187,7 @@ function App() {
   }
 
   useEffect(() => {
-    fetch("http://localhost:3000/list")
+    fetch(`${import.meta.env.VITE_API_URL}/list`)
       .then((res) => res.json())
       .then((res) => {
         setWorkouts(res);
@@ -317,7 +317,7 @@ function App() {
           setNewWeight("");
           setNewSets("");
           // console.log([...workouts], "Workout array");
-          fetch("http://localhost:3000/add", {
+          fetch(`${import.meta.env.VITE_API_URL}/add`, {
             method: "POST",
             mode: "cors",
             headers: {
