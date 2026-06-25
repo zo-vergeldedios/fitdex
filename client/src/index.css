@@ -1,0 +1,249 @@
+/* @import "tailwindcss"; */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #18181b;
+  --accent: #f97316;
+  --text: #fafafa;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Montserrat", sans-serif;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+img {
+  max-width: 300px;
+  align-self: center;
+  margin: 20px;
+}
+
+#workout-section {
+  width: 100%;
+  max-width: 600px;
+  padding: 0 16px;
+}
+
+#workoutplan-container {
+  height: 300px;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.workout-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+main {
+  padding-bottom: 200px;
+}
+#add-workout-title {
+  margin-top: 20px;
+}
+/* .workout-name-container {
+  display: flex;
+  margin-bottom: 10px;
+} */
+
+input {
+  border-radius: 3px;
+  margin-left: 3px;
+  border: none;
+}
+
+#add-workout-button {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 3px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: 800;
+  margin: 20px 0;
+}
+
+#add-workout-button:hover {
+  background: none;
+  padding: 3px 7px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 3px;
+}
+
+h3 {
+  color: var(--accent);
+}
+.workout-day {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+#day-of-week {
+  margin: 10px 0;
+}
+.change-day-button {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 3px;
+  margin: 5px 4px;
+  font-weight: 700;
+}
+
+.change-day-button:hover {
+  background: none;
+  padding: 3px 7px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#edit-workout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+h2 {
+  margin-top: 5px;
+}
+
+.workout-div {
+  width: 500px;
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) 80px 80px 80px 80px;
+  gap: 0 20px;
+}
+
+.workout-title {
+  margin-top: 10px;
+}
+
+#workout-heading {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) 80px 80px 80px 80px;
+  width: 500px;
+  gap: 0 20px;
+  margin-top: 10px;
+  color: var(--accent);
+  font-weight: 700;
+}
+/* .workout-title-heading {
+  margin: 5px 25px;
+} */
+
+ul {
+  list-style-type: none;
+}
+
+.edit-button {
+  align-self: end;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: 2px 5px;
+  border-radius: 3px;
+  margin-left: 20px;
+}
+
+.li-info {
+  width: 50px;
+  color: #18181b;
+}
+
+#workout-name-input {
+  width: 90px;
+}
+
+.saveAndDeleteButton {
+  background-color: var(--bg);
+  color: var(--accent);
+  border: none;
+  padding: 5px;
+  font-weight: 900;
+  font-size: 15px;
+  margin-left: 5px;
+}
+
+.workout-checker {
+  font-weight: 900;
+  font-size: 30px;
+  margin-bottom: 5px;
+  margin-top: -10px;
+}
+
+.glow-text {
+  animation-name: glow;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: linear;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 7px var(--accent);
+  }
+  50% {
+    text-shadow: 0 0 3px rgb(255, 170, 0);
+  }
+  100% {
+    text-shadow: 0 0 5px var(--accent);
+  }
+}
+
+@media (max-width: 480px) {
+  #workout-heading {
+    display: grid;
+    grid-template-columns: minmax(70px, 1fr) 40px 40px 40px 60px;
+    width: 400px;
+    gap: 0 10px;
+    margin-top: 10px;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .workout-div {
+    grid-template-columns: minmax(70px, 1fr) 40px 40px 40px 60px;
+    width: 420px;
+    gap: 0 10px;
+    font-size: 15px;
+  }
+
+  .workout-title {
+    margin-top: 10px;
+  }
+  /* 
+  #workout-section {
+    width: 80%;
+    max-width: 380px;
+    margin: auto;
+    padding: 0 10px;
+    font-size: 15px;
+  } */
+}
