@@ -5,7 +5,9 @@ const cors = require("cors");
 require("dotenv/config"); // import 'dotenv/config'
 const postgres = require("postgres"); // import postgres from 'postgres'
 
-app.use(cors({ origin: "https://fitdex-beige.vercel.app" }));
+console.log(process.env.VITE_API_URL);
+// app.use(cors({ origin: "https://fitdex-beige.vercel.app" }));
+app.use(cors({ origin: process.env.VITE_API_URL }));
 app.use(express.json());
 
 const sql = postgres(process.env.PG_CONNECTION_STRING);
