@@ -28,7 +28,7 @@ main {
 }
 
 img {
-  max-width: 300px;
+  max-width: 200px;
   align-self: center;
   margin: 20px;
 }
@@ -219,8 +219,8 @@ ul {
 @media (max-width: 390px) {
   #workout-heading {
     display: grid;
-    grid-template-columns: minmax(70px, 1fr) 40px 40px 40px 60px;
-    width: 400px;
+    grid-template-columns: minmax(40px, 1fr) 40px 40px 40px 60px;
+    width: 350px;
     gap: 0 10px;
     margin-top: 10px;
     color: var(--accent);
@@ -229,8 +229,8 @@ ul {
   }
 
   .workout-div {
-    grid-template-columns: minmax(70px, 1fr) 40px 40px 40px 60px;
-    width: 420px;
+    grid-template-columns: minmax(40px, 1fr) 40px 40px 40px 60px;
+    width: 350px;
     gap: 0 10px;
     font-size: 15px;
   }
