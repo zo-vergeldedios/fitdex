@@ -43,7 +43,6 @@ img {
   height: 300px;
   width: 100%;
   overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .workout-container {
