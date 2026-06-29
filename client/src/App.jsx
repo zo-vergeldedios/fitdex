@@ -207,32 +207,10 @@ function App() {
       </div>
 
       <div className="workout-day">
-        <h2>Day of Week:</h2>
+        <h2 id="day-of-week-h2">Day of Week:</h2>
         <span id="day-of-week">
           <h2>{weekdays[weekdayIndex]}</h2>
         </span>
-        <div>
-          <button
-            className="change-day-button"
-            onClick={() => {
-              if (weekdayIndex > 0) {
-                setWeekdayIndex(weekdayIndex - 1);
-              } else if (weekdayIndex == 0) {
-                setWeekdayIndex(6);
-              }
-            }}
-          >
-            Previous Day
-          </button>
-          <button
-            className="change-day-button"
-            onClick={() => {
-              setWeekdayIndex((weekdayIndex + 1) % 7);
-            }}
-          >
-            Next Day
-          </button>
-        </div>
       </div>
       <div id="workout-section">
         <div id="workout-heading">
@@ -249,7 +227,28 @@ function App() {
             ))}
         </ul>
       </div>
-
+      <div id="change-day-button-div">
+        <button
+          className="change-day-button"
+          onClick={() => {
+            if (weekdayIndex > 0) {
+              setWeekdayIndex(weekdayIndex - 1);
+            } else if (weekdayIndex == 0) {
+              setWeekdayIndex(6);
+            }
+          }}
+        >
+          Previous Day
+        </button>
+        <button
+          className="change-day-button"
+          onClick={() => {
+            setWeekdayIndex((weekdayIndex + 1) % 7);
+          }}
+        >
+          Next Day
+        </button>
+      </div>
       <h3 id="add-workout-title">Add Workout</h3>
       <div className="workout-container">
         <span>Workout Name:</span>
