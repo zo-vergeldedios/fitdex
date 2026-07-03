@@ -35,12 +35,12 @@ img {
 
 #workout-section {
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   padding: 0 16px;
 }
 
 #workoutplan-container {
-  height: 360px;
+  height: 560px;
   width: 100%;
   overflow-y: auto;
   overflow-x: auto;
@@ -83,12 +83,16 @@ input {
   margin: 20px 0;
 }
 
-#add-workout-button:hover {
+#add-workout-button:hover:not([disabled]) {
   background: none;
   padding: 3px 7px;
   border: 1px solid var(--accent);
   color: var(--accent);
   border-radius: 3px;
+}
+
+#add-workout-button[disabled] {
+  background-color: grey;
 }
 
 h3 {
@@ -132,10 +136,16 @@ h2 {
   margin-top: 5px;
 }
 
+#error {
+  color: red;
+  font-weight: 500;
+  font-size: 10px;
+}
+
 .workout-div {
   width: 500px;
   display: grid;
-  grid-template-columns: minmax(150px, 1fr) 80px 80px 80px 80px;
+  grid-template-columns: minmax(250px, 1fr) 80px 80px 80px 80px;
   gap: 0 20px;
 }
 
@@ -145,7 +155,7 @@ h2 {
 
 #workout-heading {
   display: grid;
-  grid-template-columns: minmax(150px, 1fr) 80px 80px 80px 80px;
+  grid-template-columns: minmax(250px, 1fr) 80px 80px 80px 80px;
   width: 500px;
   gap: 0 20px;
   margin-top: 10px;
@@ -214,6 +224,12 @@ ul {
   100% {
     text-shadow: 0 0 5px var(--accent);
   }
+}
+
+#successAndErrorMessage {
+  color: var(--accent);
+  font-size: 14px;
+  margin-top: 5px;
 }
 
 @media (max-width: 420px) {

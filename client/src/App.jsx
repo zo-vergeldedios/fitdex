@@ -9,6 +9,8 @@ function App() {
   const [newReps, setNewReps] = useState("");
   const [newSets, setNewSets] = useState("");
   const [newWeight, setNewWeight] = useState("");
+  // const [error, setError] = useState("");
+  // const [userHasHoverButton, setUserHasHoverButton] = useState(false);
 
   // const [selectedDay, setSelectedDay] = useState(0);
 
@@ -23,6 +25,19 @@ function App() {
   ];
 
   const [weekdayIndex, setWeekdayIndex] = useState(new Date().getDay());
+
+  const [successAndErrorMessage, setSuccessAndErrorMessage] = useState("");
+
+  function ShowErrorOrSuccessMessage() {
+    useEffect(() => {
+      const message = setTimeout(() => {
+        setSuccessAndErrorMessage("");
+      }, 3000);
+      return () => clearTimeout(message);
+    }, []);
+
+    return <span id="successAndErrorMessage">{successAndErrorMessage}</span>;
+  }
 
   function EditWorkout({ workout }) {
     const [newWorkout, setNewWorkout] = useState(workout.workout_name);
@@ -71,12 +86,14 @@ function App() {
               }),
             })
               .then((res) => {
-                // res.send({ success: "ok" });
+                console.log({ success: "workout successfully deleted" });
+                setSuccessAndErrorMessage("Workout deleted");
                 return res.json;
                 // TODO: success message
               })
               .catch(function (error) {
                 console.log(error);
+                setSuccessAndErrorMessage("Failed to delete the workout");
                 // TODO: failure message
               });
           }}
@@ -116,12 +133,15 @@ function App() {
               }),
             })
               .then((res) => {
+                setSuccessAndErrorMessage("Workout updated");
+                console.log({ success: "workout updated" });
                 return res.json;
               })
               .then((data) => {
                 console.log(data);
               })
               .catch(function (error) {
+                setSuccessAndErrorMessage("Failed to update the workout");
                 console.log(error);
               });
           }}
@@ -194,6 +214,27 @@ function App() {
       });
   }, []);
 
+  const isButtonDisabled =
+    typeof newSets !== "number" ||
+    newSets == "" ||
+    typeof newReps !== "number" ||
+    newReps == "" ||
+    typeof newWeight !== "number" ||
+    newWeight == "" ||
+    typeof newWorkout !== "string" ||
+    newWorkout == "";
+
+  // let inputError = "";
+  // if (typeof newWorkout !== "string") {
+  //   inputError = "check workout name";
+  // } else if (typeof newSets !== "number") {
+  //   inputError = "check sets";
+  // } else if (typeof newReps !== "number") {
+  //   inputError = "check reps";
+  // } else if (typeof newWeight !== "number") {
+  //   inputError = "check weight";
+  // }
+
   return (
     <main>
       <img src={fitDexLogo} alt="fitDex" />
@@ -264,10 +305,11 @@ function App() {
         <span>Sets:</span>
         <input
           value={newSets}
+          type="number"
           id="sets-input"
           onChange={(e) => {
             // console.log({ e });
-            setNewSets(e.target.value);
+            setNewSets(Number(e.target.value));
           }}
         />
 
@@ -275,9 +317,10 @@ function App() {
         <input
           value={newReps}
           id="reps-input"
+          type="number"
           onChange={(e) => {
             // console.log({ e });
-            setNewReps(e.target.value);
+            setNewReps(Number(e.target.value));
           }}
         />
 
@@ -285,18 +328,28 @@ function App() {
         <input
           value={newWeight}
           id="weight-input"
+          type="number"
           onChange={(e) => {
             // console.log({ e });
-            setNewWeight(e.target.value);
+            setNewWeight(Number(e.target.value));
           }}
         />
       </div>
+      {/* TODO - Fix the messages */}
+      {/* {inputError && userHasHoverButton && <span id="error">{inputError}</span>} */}
+      <ShowErrorOrSuccessMessage />
       <button
         id="add-workout-button"
+        className={isButtonDisabled ? "disabled" : ""}
+        disabled={isButtonDisabled}
+        // onMouseEnter={() => {
+        //   setUserHasHoverButton(true);
+        //   console.log("userHovered");
+        // }}
         onClick={() => {
-          // workouts = [1, 2, 3]
-          // newWorkout = 4
+          if (isButtonDisabled) return;
           let id = Math.floor(Math.random() * 1000000000);
+
           setWorkouts([
             ...workouts,
             {
@@ -333,10 +386,15 @@ function App() {
             }),
           })
             .then((res) => {
+              console.log({ success: "workout-added" });
+              setSuccessAndErrorMessage("Workout successfully added");
               return res.json;
             })
             .catch(function (error) {
-              console.log(error);
+              setSuccessAndErrorMessage("Failed to add the workout");
+              console.log(`Failed to add workout: ${error}`);
+              //TODO - show error to the user
+              // setError();
             });
         }}
       >
