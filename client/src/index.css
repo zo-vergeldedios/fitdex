@@ -180,6 +180,42 @@ ul {
   margin-left: 20px;
 }
 
+.edit-all-button {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+.edit-all-button:hover {
+  background: none;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.save-all-button {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 3px 4px;
+  font-weight: 700;
+  margin-left: 4px;
+  margin-top: 8px;
+}
+
+.save-all-button:hover {
+  background: none;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
 .li-info {
   width: 50px;
   color: #18181b;
