@@ -271,13 +271,36 @@ ul {
 @media (max-width: 420px) {
   #workout-heading {
     display: grid;
-    grid-template-columns: 160px 34px 34px 34px auto;
+    grid-template-columns: 158px 34px 34px 34px auto;
     width: 240px;
     gap: 0 10px;
     margin-top: 10px;
+    margin-bottom: 7px;
     color: var(--accent);
     font-weight: 700;
     font-size: 12px;
+  }
+
+  .edit-all-button {
+    background-color: var(--accent);
+    white-space: nowrap;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 8px 4px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-left: 16px;
+    margin-top: -3px;
+  }
+
+  .edit-all-button:hover {
+    background: none;
+    border: 1px solid var(--accent);
+    padding: 4px 7px 3px 7px;
+    color: var(--accent);
+    border-radius: 3px;
+    cursor: pointer;
   }
 
   .workout-div {
