@@ -211,6 +211,8 @@ function App() {
   const [workouts, setWorkouts] = useState([]);
   const [successAndErrorMessage, setSuccessAndErrorMessage] = useState("");
 
+  const [userToken, setUserToken] = useState("");
+
   const weekdays = [
     "Sunday",
     "Monday",
@@ -240,8 +242,25 @@ function App() {
       .then((res) => res.json())
       .then((res) => {
         setWorkouts(res);
+        // setWorkouts(res.filter(wo => wo.user_token === our_user_token))
       });
   }, []);
+  // TODO:
+  // - add user_token column to workout table -
+  // - add state for user_token in App
+  //   - if empty, show input for user to add token
+  // - server actions based on user token (fetch only from user_token, add user_token to new workouts, only allow update if user_token matches)
+
+  // useEffect(()=>{
+  //   async
+  // },[])
+
+  //     if(user_name){
+
+  //     <div>
+  //       <div/>
+
+  // }
 
   const isButtonDisabled =
     typeof newSets !== "number" ||
@@ -263,6 +282,9 @@ function App() {
   // } else if (typeof newWeight !== "number") {
   //   inputError = "check weight";
   // }
+
+  // if(userToken)
+  //   return main -> input that sets userToken
 
   return (
     <main>
@@ -542,135 +564,3 @@ function App() {
 }
 
 export default App;
-
-{
-  /* <label htmlFor="select-button">Pick a day to save this workout</label>
-        <select
-          className="ml-2 mr-2 bg-zinc-800 text-white text-sm border border-zinc-600 rounded px-2 py-1 cursor-pointer hover:border-orange-500 focus:outline-none focus:border-orange-500"
-          value={selectedDay}
-          onChange={(e) => setSelectedDay(e.target.value)}
-          name="workout"
-          id="select-button"
-        >
-          <option value="0">Monday</option>
-          <option value="1">Tuesday</option>
-          <option value="2">Wednesday</option>
-          <option value="3">Thursday</option>
-          <option value="4">Friday</option>
-          <option value="5">Saturday</option>
-          <option value="6">Sunday</option>
-        </select>
-        <button
-          className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium px-3 py-1 rounded transition-colors duration-150"
-          onClick={() => {
-            workouts
-              .filter((wo) => wo.weekday_index == 10)
-              .map((workout) => {
-                workout.weekday_index = selectedDay;
-
-                fetch("http://localhost:3000/update", {
-                  method: "POST",
-                  mode: "cors",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    id: workout.id,
-                    workout_name: workout.workout_name,
-                    sets: workout.sets,
-                    reps: workout.reps,
-                    weight: workout.weight,
-                    editing: false,
-                    weekday_index: selectedDay,
-                  }),
-                })
-                  .then((res) => {
-                    return res.json;
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                  });
-              });
-
-            setWorkouts(
-              workouts.map((workout) => {
-                if (!workout.editing) {
-                  return workout;
-                }
-                workout.weekday_index = selectedDay;
-                workout.editing = false;
-                console.log(workout, "workout");
-                return workout;
-              }),
-            );
-          }}
-        >
-          Save Workout Plan
-        </button>
-         */
-}
-// function updateWorkout(index) {
-//   let [id, name, sets, reps, weight] = [...workouts];
-//   let editing = false;
-//   // const { id } = workouts[index];
-
-//   workouts[index].editing = false;
-//   workouts[index].weekdayIndex = weekdayIndex;
-
-//Replicate the plain javascript to react
-// console.log(selectedDay);
-// console.log({ workouts, weekdayIndex });
-{
-  /* h('ul', { ... }, 
-        workouts.map(workout => h('li', {}, [workout]))) */
-}
-
-// [object Object] -> {hello:'bye'}.toString()
-{
-  /* {workouts.map((workout) => (
-    
-          // <li key={workout.id}>
-          //   {workout.workout_name},{workout.sets}, {workout.reps},{" "}
-          //   {workout.weight}
-          <li key={workout.id}>
-            <input
-              type="text"
-              className="li-info li-workout-name"
-              value={workout.workout_name}
-            />
-            <input type="text" className="li-info" value={workout.sets} />
-            <input type="text" className="li-info" value={workout.reps} />
-            <input type="text" className="li-info" value={workout.weight} />
-            <button
-              onClick={() => {
-                // ['x', 'y', 'z']
-                // workout = 'z'
-                // workouts.filter((wo) => wo !== 'z') // ['x', 'y']
-                setWorkouts(workouts.filter((wo) => wo.id !== workout.id));
-                fetch("http://localhost:3000/delete", {
-                  method: "POST",
-                  mode: "cors",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    id: workout.id,
-                  }),
-                })
-                  .then((res) => {
-                    // res.send({ success: "ok" });
-                    return res.json;
-                    // TODO: success message
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                    // TODO: failure message
-                  });
-              }}
-            >
-              ❌
-            </button>
-            <button>✅</button>
-          </li>
-        ))} */
-}
