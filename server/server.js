@@ -12,8 +12,8 @@ app.use(express.json());
 
 const sql = postgres(process.env.PG_CONNECTION_STRING);
 
-async function getWorkout() {
-  const result = await sql`select * from fitness_app`;
+async function getWorkout(token) {
+  const result = await sql`select * from fitness_app where token = ${token}`;
 
   return result.map((wo) => ({
     id: Number(wo.id),
@@ -27,9 +27,17 @@ async function getWorkout() {
 }
 
 app.get("/list", async (req, res) => {
-  res.send(await getWorkout());
+  const url = `https://www.fitdex.com${req.url}`;
+  console.log(url);
+  const params = new URL(url).searchParams;
+  const token = params.get("token");
+  console.log(token);
+  res.send(await getWorkout(token));
 });
-
+//TODO
+//Update database on supabase
+//Pass token in all the queries
+//Update insert, update, delete it should include token.
 async function insertWorkout(id, n, s, r, w, e, i) {
   await sql`insert into fitness_app (id, workout_name, sets, reps, weight, editing, weekday_index) values (${id}, ${n}, ${s}, ${r}, ${w}, ${e}, ${i})`;
 }

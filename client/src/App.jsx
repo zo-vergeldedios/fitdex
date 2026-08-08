@@ -238,13 +238,13 @@ function App() {
   // TODO - Get all of the components out of App().
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/list`)
+    fetch(`${import.meta.env.VITE_API_URL}/list?token=${userToken}`)
       .then((res) => res.json())
       .then((res) => {
         setWorkouts(res);
         // setWorkouts(res.filter(wo => wo.user_token === our_user_token))
       });
-  }, []);
+  }, [userToken]);
   // TODO:
   // - add user_token column to workout table -
   // - add state for user_token in App
@@ -289,6 +289,14 @@ function App() {
   return (
     <main>
       <img src={fitDexLogo} alt="fitDex" />
+
+      <div>
+        <p>token:</p>
+        <input
+          value={userToken}
+          onChange={(e) => setUserToken(e.target.value)}
+        />
+      </div>
 
       <div>
         {workouts.length > 0 ? (
