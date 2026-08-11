@@ -12,6 +12,7 @@ function EditWorkout({
   setWorkouts,
   setSuccessAndErrorMessage,
   weekdayIndex,
+  userToken,
 }) {
   const [updatedWorkout, setUpdatedWorkout] = useState(workout.workout_name);
   const [updatedReps, setUpdatedReps] = useState(workout.reps);
@@ -64,6 +65,7 @@ function EditWorkout({
             },
             body: JSON.stringify({
               id: workout.id,
+              user_token: userToken,
             }),
           })
             .then((res) => {
@@ -111,6 +113,7 @@ function EditWorkout({
               weight: updatedWeight,
               editing: false,
               weekday_index: weekdayIndex,
+              user_token: userToken,
             }),
           })
             .then((res) => {
@@ -139,6 +142,7 @@ function ShowProgram({
   setWorkouts,
   setSuccessAndErrorMessage,
   weekdayIndex,
+  userToken,
 }) {
   // const [workouts, setWorkouts] = useState([]);
 
@@ -176,6 +180,7 @@ function ShowProgram({
               weight: wo.weight,
               editing: true,
               weekday_index: weekdayIndex,
+              user_token: userToken,
             }),
           })
             .then((res) => {
@@ -290,8 +295,8 @@ function App() {
     <main>
       <img src={fitDexLogo} alt="fitDex" />
 
-      <div>
-        <p>token:</p>
+      <div id="username-div">
+        <p id="username-p">User Name:</p>
         <input
           value={userToken}
           onChange={(e) => setUserToken(e.target.value)}
@@ -340,6 +345,7 @@ function App() {
                         weight: wo.weight,
                         editing: true,
                         weekday_index: weekdayIndex,
+                        user_token: userToken,
                       }),
                     })
                       .then((res) => {
@@ -374,6 +380,7 @@ function App() {
                 setWorkouts={setWorkouts}
                 setSuccessAndErrorMessage={setSuccessAndErrorMessage}
                 weekdayIndex={weekdayIndex}
+                userToken={userToken}
               />
             ))}
         </ul>
@@ -487,6 +494,7 @@ function App() {
               weight: newWeight,
               workout_name: newWorkout,
               weekday_index: weekdayIndex,
+              user_token: userToken,
             }),
           })
             .then((res) => {
@@ -518,6 +526,7 @@ function App() {
                 setWorkouts={setWorkouts}
                 setSuccessAndErrorMessage={setSuccessAndErrorMessage}
                 weekdayIndex={weekdayIndex}
+                userToken={userToken}
               />
             ))}
         </ul>
@@ -546,6 +555,7 @@ function App() {
                       weight: wo.weight,
                       editing: false,
                       weekday_index: weekdayIndex,
+                      user_token: userToken,
                     }),
                   })
                     .then((res) => {

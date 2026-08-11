@@ -27,6 +27,22 @@ main {
   align-items: center;
 }
 
+#username-div {
+  margin: 5px 0 40px 0;
+}
+
+#username-div input {
+  padding: 5px 15px;
+}
+
+#username-p {
+  font-family: "Montserrat", sans-serif;
+  margin-right: -20px;
+  margin-bottom: 5px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
 img {
   max-width: 200px;
   align-self: center;

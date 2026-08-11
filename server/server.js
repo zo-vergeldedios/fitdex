@@ -13,7 +13,8 @@ app.use(express.json());
 const sql = postgres(process.env.PG_CONNECTION_STRING);
 
 async function getWorkout(token) {
-  const result = await sql`select * from fitness_app where token = ${token}`;
+  const result =
+    await sql`select * from fitness_app where user_token = ${token}`;
 
   return result.map((wo) => ({
     id: Number(wo.id),
@@ -38,8 +39,8 @@ app.get("/list", async (req, res) => {
 //Update database on supabase
 //Pass token in all the queries
 //Update insert, update, delete it should include token.
-async function insertWorkout(id, n, s, r, w, e, i) {
-  await sql`insert into fitness_app (id, workout_name, sets, reps, weight, editing, weekday_index) values (${id}, ${n}, ${s}, ${r}, ${w}, ${e}, ${i})`;
+async function insertWorkout(id, n, s, r, w, e, i, t) {
+  await sql`insert into fitness_app (id, workout_name, sets, reps, weight, editing, weekday_index, user_token) values (${id}, ${n}, ${s}, ${r}, ${w}, ${e}, ${i}, ${t})`;
 }
 
 app.post("/add", (req, res) => {
@@ -51,6 +52,7 @@ app.post("/add", (req, res) => {
     req.body.weight,
     req.body.editing,
     req.body.weekday_index,
+    req.body.user_token,
   );
   // console.log(workoutServer, "Server");
   res.send("Post Successfully Sent");
@@ -64,7 +66,9 @@ async function updateWorkout(
   weight,
   editing,
   weekday_index,
+  token,
 ) {
+  console.log(token, "TOKEN");
   // throw new Error("hello");
   const res = await sql`
   update fitness_app 
@@ -75,7 +79,7 @@ async function updateWorkout(
   weight = ${weight},
   editing = ${editing}, 
   weekday_index = ${weekday_index} 
-  where id = ${id}`;
+  where id = ${id} and user_token = ${token}`;
   console.log(res);
 }
 
@@ -91,17 +95,18 @@ app.post("/update", (req, res) => {
     req.body.weight,
     req.body.editing,
     req.body.weekday_index,
+    req.body.user_token,
   );
   console.log(req.body);
   res.send({ success: "ok" });
 });
 
-async function deleteWorkout(id) {
-  await sql`delete from fitness_app where id = ${id}`;
+async function deleteWorkout(id, token) {
+  await sql`delete from fitness_app where id = ${id} and user_token = ${token}`;
 }
 
 app.post("/delete", (req, res) => {
-  deleteWorkout(req.body.id);
+  deleteWorkout(req.body.id, req.body.user_token);
   res.send({ success: "ok" });
 });
 
