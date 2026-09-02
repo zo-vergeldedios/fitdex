@@ -44,9 +44,9 @@ main {
 }
 
 img {
-  max-width: 200px;
-  align-self: center;
-  margin: 20px;
+  max-width: 80px;
+  align-self: end;
+  margin-top: 10px;
 }
 
 #workout-section {
@@ -161,7 +161,7 @@ h2 {
 .workout-div {
   width: 500px;
   display: grid;
-  grid-template-columns: minmax(250px, 1fr) 80px 80px 80px 80px;
+  grid-template-columns: 5px minmax(240px, 1fr) 70px 80px 80px 80px;
   gap: 0 20px;
 }
 
@@ -320,7 +320,7 @@ ul {
   }
 
   .workout-div {
-    grid-template-columns: 160px 24px 24px 24px auto;
+    grid-template-columns: 2px 145px 22px 22px 22px auto;
     width: 240px;
     gap: 0 24px;
     font-size: 12px;

@@ -13,8 +13,15 @@ app.use(express.json());
 const sql = postgres(process.env.PG_CONNECTION_STRING);
 
 async function getWorkout(token) {
-  const result =
-    await sql`select * from fitness_app where user_token = ${token}`;
+  const result = await sql`select  id, 
+  workout_name, 
+  sets, 
+  reps, 
+  weight, 
+  editing, 
+  weekday_index,
+  workout_index
+   from fitness_app where user_token = ${token}`;
 
   return result.map((wo) => ({
     id: Number(wo.id),
@@ -24,6 +31,7 @@ async function getWorkout(token) {
     weight: Number(wo.weight),
     editing: wo.editing,
     weekday_index: Number(wo.weekday_index),
+    workout_index: Number(wo.workout_index),
   }));
 }
 
@@ -39,8 +47,8 @@ app.get("/list", async (req, res) => {
 //Update database on supabase
 //Pass token in all the queries
 //Update insert, update, delete it should include token.
-async function insertWorkout(id, n, s, r, w, e, i, t) {
-  await sql`insert into fitness_app (id, workout_name, sets, reps, weight, editing, weekday_index, user_token) values (${id}, ${n}, ${s}, ${r}, ${w}, ${e}, ${i}, ${t})`;
+async function insertWorkout(id, n, s, r, w, e, i, t, wi) {
+  await sql`insert into fitness_app (id, workout_name, sets, reps, weight, editing, weekday_index, user_token, workout_index) values (${id}, ${n}, ${s}, ${r}, ${w}, ${e}, ${i}, ${t}, ${wi})`;
 }
 
 app.post("/add", (req, res) => {
@@ -53,6 +61,7 @@ app.post("/add", (req, res) => {
     req.body.editing,
     req.body.weekday_index,
     req.body.user_token,
+    req.body.workout_index,
   );
   // console.log(workoutServer, "Server");
   res.send("Post Successfully Sent");
@@ -67,8 +76,10 @@ async function updateWorkout(
   editing,
   weekday_index,
   token,
+  workoutIndex,
 ) {
   console.log(token, "TOKEN");
+  console.log(workoutIndex, "workoutIndex");
   // throw new Error("hello");
   const res = await sql`
   update fitness_app 
@@ -78,8 +89,8 @@ async function updateWorkout(
   reps = ${reps},
   weight = ${weight},
   editing = ${editing}, 
-  weekday_index = ${weekday_index} 
-  where id = ${id} and user_token = ${token}`;
+  weekday_index = ${weekday_index},
+  workout_index = ${workoutIndex} where id = ${id} and user_token = ${token}`;
   console.log(res);
 }
 
@@ -96,6 +107,7 @@ app.post("/update", (req, res) => {
     req.body.editing,
     req.body.weekday_index,
     req.body.user_token,
+    req.body.workout_index,
   );
   console.log(req.body);
   res.send({ success: "ok" });

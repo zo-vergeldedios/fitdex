@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
-import fitDexLogo from "./assets/fitDex-logo.png";
+// import fitDexLogo from "./assets/fitDex-logo.png";
+import gorilyaLogo from "./assets/gorilya.png";
 // import "./App.css";
 
 function ShowErrorOrSuccessMessage({ message }) {
   return <span id="successAndErrorMessage">{message}</span>;
 }
+
+function SaveAllWorkout() {}
 
 function EditWorkout({
   workout,
@@ -18,16 +21,17 @@ function EditWorkout({
   const [updatedReps, setUpdatedReps] = useState(workout.reps);
   const [updatedSets, setUpdatedSets] = useState(workout.sets);
   const [updatedWeight, setUpdatedWeight] = useState(workout.weight);
-  // {
-  // useEffect(() => {
-  // setNewWorkout(workout.workout_name);
-  // setNewReps(workout.reps);
-  // setNewSets(workout.sets);
-  // setNewWeight(workout.weight);
-  // }, [workouts]);
-  // }
+  const [updatedIndex, setUpdatedIndex] = useState(workout.workout_index);
+
   return (
     <li>
+      <input
+        id="workout-index"
+        type="number"
+        onChange={(e) => setUpdatedIndex(e.target.value)}
+        className="li-info li-workout-name"
+        value={updatedIndex || 0}
+      />
       <input
         id="workout-name-input"
         type="text"
@@ -95,6 +99,8 @@ function EditWorkout({
                 wo.weight = updatedWeight;
                 wo.editing = false;
                 wo.weekday_index = weekdayIndex;
+                wo.workout_index = updatedIndex;
+                console.log(wo);
               }
               return wo;
             }),
@@ -114,6 +120,7 @@ function EditWorkout({
               editing: false,
               weekday_index: weekdayIndex,
               user_token: userToken,
+              workout_index: updatedIndex,
             }),
           })
             .then((res) => {
@@ -144,10 +151,10 @@ function ShowProgram({
   weekdayIndex,
   userToken,
 }) {
-  // const [workouts, setWorkouts] = useState([]);
-
   return (
     <div className="workout-div">
+      {/* TODO: Change each class name */}
+      <span className="workout-title">{wo.workout_index}.</span>
       <span className="workout-title">{wo.workout_name}</span>
       <span className="workout-title">{wo.sets}</span>
       <span className="workout-title">{wo.reps}</span>
@@ -164,8 +171,6 @@ function ShowProgram({
             }),
           );
 
-          console.log(wo, "edit program");
-
           fetch(`${import.meta.env.VITE_API_URL}/update`, {
             method: "POST",
             mode: "cors",
@@ -181,6 +186,7 @@ function ShowProgram({
               editing: true,
               weekday_index: weekdayIndex,
               user_token: userToken,
+              workout_index: wo.workout_index,
             }),
           })
             .then((res) => {
@@ -215,6 +221,7 @@ function App() {
   const [newWeight, setNewWeight] = useState("");
   const [workouts, setWorkouts] = useState([]);
   const [successAndErrorMessage, setSuccessAndErrorMessage] = useState("");
+  const [workoutIndex, setWorkoutIndex] = useState("");
 
   const [userToken, setUserToken] = useState("");
 
@@ -256,17 +263,6 @@ function App() {
   //   - if empty, show input for user to add token
   // - server actions based on user token (fetch only from user_token, add user_token to new workouts, only allow update if user_token matches)
 
-  // useEffect(()=>{
-  //   async
-  // },[])
-
-  //     if(user_name){
-
-  //     <div>
-  //       <div/>
-
-  // }
-
   const isButtonDisabled =
     typeof newSets !== "number" ||
     newSets == "" ||
@@ -277,23 +273,9 @@ function App() {
     typeof newWorkout !== "string" ||
     newWorkout == "";
 
-  // let inputError = "";
-  // if (typeof newWorkout !== "string") {
-  //   inputError = "check workout name";
-  // } else if (typeof newSets !== "number") {
-  //   inputError = "check sets";
-  // } else if (typeof newReps !== "number") {
-  //   inputError = "check reps";
-  // } else if (typeof newWeight !== "number") {
-  //   inputError = "check weight";
-  // }
-
-  // if(userToken)
-  //   return main -> input that sets userToken
-
   return (
     <main>
-      <img src={fitDexLogo} alt="fitDex" />
+      <img src={gorilyaLogo} alt="GorilyaFitnessTracker" />
 
       <div id="username-div">
         <p id="username-p">User Name:</p>
@@ -346,6 +328,7 @@ function App() {
                         editing: true,
                         weekday_index: weekdayIndex,
                         user_token: userToken,
+                        workout_index: wo.workout_index,
                       }),
                     })
                       .then((res) => {
@@ -372,6 +355,7 @@ function App() {
         <ul id="workoutplan-container">
           {workouts
             .filter((wo) => wo.weekday_index === weekdayIndex && !wo.editing)
+            .sort((a, b) => a.workout_index - b.workout_index)
             .map((wo) => (
               <ShowProgram
                 wo={wo}
@@ -409,6 +393,14 @@ function App() {
       </div>
       <h3 id="add-workout-title">Add Workout</h3>
       <div className="workout-container">
+        <span>#:</span>
+        <input
+          value={workoutIndex}
+          id="workout-input"
+          onChange={(e) => {
+            setWorkoutIndex(e.target.value);
+          }}
+        />
         <span>Workout Name:</span>
         <input
           value={newWorkout}
@@ -453,10 +445,6 @@ function App() {
         id="add-workout-button"
         className={isButtonDisabled ? "disabled" : ""}
         disabled={isButtonDisabled}
-        // onMouseEnter={() => {
-        //   setUserHasHoverButton(true);
-        //   console.log("userHovered");
-        // }}
         onClick={() => {
           if (isButtonDisabled) return;
           let id = Math.floor(Math.random() * 1000000000);
@@ -471,6 +459,7 @@ function App() {
               weight: newWeight,
               workout_name: newWorkout,
               weekday_index: weekdayIndex,
+              workout_index: workoutIndex,
             },
           ]);
           console.log(weekdayIndex);
@@ -479,6 +468,7 @@ function App() {
           setNewReps("");
           setNewWeight("");
           setNewSets("");
+          setWorkoutIndex("");
           // console.log([...workouts], "Workout array");
           fetch(`${import.meta.env.VITE_API_URL}/add`, {
             method: "POST",
@@ -495,6 +485,7 @@ function App() {
               workout_name: newWorkout,
               weekday_index: weekdayIndex,
               user_token: userToken,
+              workout_index: workoutIndex,
             }),
           })
             .then((res) => {
@@ -505,8 +496,6 @@ function App() {
             .catch(function (error) {
               setSuccessAndErrorMessage("Failed to add the workout");
               console.log(`Failed to add workout: ${error}`);
-              //TODO - show error to the user
-              // setError();
             });
         }}
       >
@@ -539,8 +528,7 @@ function App() {
               workouts.map((wo) => {
                 if (wo.editing == true) {
                   wo.editing = false;
-                  console.log(wo);
-
+                  wo.id = wo.id;
                   fetch(`${import.meta.env.VITE_API_URL}/update`, {
                     method: "POST",
                     mode: "cors",
@@ -556,10 +544,11 @@ function App() {
                       editing: false,
                       weekday_index: weekdayIndex,
                       user_token: userToken,
+                      workout_index: wo.workout_index,
                     }),
                   })
                     .then((res) => {
-                      return res.json;
+                      return res.json();
                     })
                     .then((data) => {
                       console.log(data);
@@ -569,6 +558,7 @@ function App() {
                       console.log(error);
                     });
                 }
+                console.log(wo, "checker");
                 return wo;
               }),
             );
