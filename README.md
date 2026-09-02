@@ -1,4 +1,4 @@
-## FitDex
+## Gorilya Fitness Tracker
 
 A mobile-first workout tracker for planning, logging, and managing weekly training programs. Built as a full-stack application with a React frontend and Node.js/Express backend connected to a cloud PostgreSQL database.
 
