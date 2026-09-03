@@ -7,8 +7,6 @@ function ShowErrorOrSuccessMessage({ message }) {
   return <span id="successAndErrorMessage">{message}</span>;
 }
 
-function SaveAllWorkout() {}
-
 function EditWorkout({
   workout,
   workouts,

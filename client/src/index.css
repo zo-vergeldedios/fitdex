@@ -28,7 +28,7 @@ main {
 }
 
 #username-div {
-  margin: 5px 0 40px 0;
+  margin: -65px 0 40px 0;
 }
 
 #username-div input {
@@ -44,9 +44,9 @@ main {
 }
 
 img {
-  max-width: 80px;
+  max-width: 100px;
   align-self: end;
-  margin-top: 10px;
+  margin: 20px 25px 0px 20px;
 }
 
 #workout-section {
@@ -295,6 +295,18 @@ ul {
     color: var(--accent);
     font-weight: 700;
     font-size: 12px;
+  }
+
+  #username-div {
+    margin-top: 100px;
+  }
+
+  img {
+    max-width: 50px;
+    opacity: 0.6;
+    top: 0px;
+    right: -10px;
+    position: absolute;
   }
 
   .edit-all-button {
